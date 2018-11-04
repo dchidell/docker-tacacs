@@ -13,7 +13,7 @@ If additional users or parameters are required, the `tac_user.cfg` file should b
 
 If base configuration changes are required, the `tac_base.cfg` file can be altered and included as a docker volume following the above syntax.
 
-Various configuration defaults exist (defined in `tac_user.cfg`)
+Various configuration defaults exist (defined in `tac_user.cfg`)  
 **TACACS Key:** `ciscotacacskey`  
 **Priv 15 User:** `tacacs_admin` **password:** `cisco`  
 **Priv 0 User:** `tacacs_user` **password:** `cisco`  
