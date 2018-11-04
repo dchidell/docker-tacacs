@@ -4,7 +4,7 @@ This image is a built version of [tac_plus](http://www.pro-bono-publico.de/proje
 a TACACS+ implementation written by Marc Huber.
 
 Various configuration options and components were taken from an existing docker image repo which can be found here:
-https://raw.githubusercontent.com/lfkeitel/docker-tacacs-plus
+https://github.com/lfkeitel/docker-tacacs-plus
 
 ## Configuration
 Configuration is stored in two files `tac_base.cfg` and `tac_user.cfg` for the majority of users neither of these need changing should simple, basic TACACS+ testing be required.
@@ -30,6 +30,7 @@ aaa accounting commands 15 default start-stop group tacacs+
 tacacs-server host <ip> key <key>
 ```
 
+
 ## Usage
 By default all logs (including detailed information on authorization and authentication) are sent to stdout, meaning they're available to view via `docker logs` once the container is operational. This log contains all AAA information.
 
@@ -54,7 +55,7 @@ docker run -itd --name=tacacs -p 49:49 dchidell/docker-tacacs
 docker logs -f tacacs
 ```
 
-Example - Deamonise the container with a modified config file and live-view all logs after a while:
+Example - Daemonise the container with a modified config file and live-view all logs after a while:
 ```
 docker run -itd --name=tacacs -v /path/to/my/config/tac_user.cfg:/etc/tac_plus/tac_user.cfg:ro -p 49:49 dchidell/docker-tacacs
 docker logs -f tacacs
