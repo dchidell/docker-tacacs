@@ -17,16 +17,23 @@ Various configuration defaults exist (defined in `tac_user.cfg`)
 **TACACS Key:** `ciscotacacskey`  
 **Priv 15 User:** `tacacs_admin` **password:** `cisco`  
 **Priv 0 User:** `tacacs_user` **password:** `cisco`  
+**Show User:** `tacacs_showuser` **password:** `cisco`  
 
 The following cisco IOS configuration was used in the development of this image:
 ```
 aaa new-model
 aaa authentication login default group tacacs+ local
+
 aaa authorization exec default group tacacs+ local
+aaa authorization commands 0 default group tacacs+
+aaa authorization commands 1 default group tacacs+
+aaa authorization commands 15 default group tacacs+
+
 aaa accounting exec default start-stop group tacacs+
 aaa accounting commands 0 default start-stop group tacacs+
 aaa accounting commands 1 default start-stop group tacacs+
 aaa accounting commands 15 default start-stop group tacacs+
+
 tacacs-server host <ip> key <key>
 ```
 
@@ -41,19 +48,19 @@ TACACS+ uses port 49. This is exposed by the container, but will require forward
 Example - Running the default container for a quick test and inspecting the logs:
 ```
 docker run -it --rm -p 49:49 dchidell/docker-tacacs
-```
+```  
 
 Example - Deamonise the container and live-view basic logs after a while:
 ```
 docker run -itd --name=tacacs -p 49:49 dchidell/docker-tacacs
 docker exec tacacs tail -f /var/log/tac_plus.log
-```
+```  
 
 Example - Deamonise the container and live-view all logs after a while:
 ```
 docker run -itd --name=tacacs -p 49:49 dchidell/docker-tacacs
 docker logs -f tacacs
-```
+```  
 
 Example - Daemonise the container with a modified config file and live-view all logs after a while:
 ```
