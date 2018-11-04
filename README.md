@@ -18,6 +18,18 @@ Various configuration defaults exist (defined in `tac_user.cfg`)
 **Priv 15 User:** `tacacs_admin` **password:** `cisco`  
 **Priv 0 User:** `tacacs_user` **password:** `cisco`  
 
+The following cisco IOS configuration was used in the development of this image:
+```
+aaa new-model
+aaa authentication login default group tacacs+ local
+aaa authorization exec default group tacacs+ local
+aaa accounting exec default start-stop group tacacs+
+aaa accounting commands 0 default start-stop group tacacs+
+aaa accounting commands 1 default start-stop group tacacs+
+aaa accounting commands 15 default start-stop group tacacs+
+tacacs-server host <ip> key <key>
+```
+
 ## Usage
 By default all logs (including detailed information on authorization and authentication) are sent to stdout, meaning they're available to view via `docker logs` once the container is operational. This log contains all AAA information.
 
