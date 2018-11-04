@@ -14,9 +14,9 @@ If additional users or parameters are required, the `tac_user.cfg` file should b
 If base configuration changes are required, the `tac_base.cfg` file can be altered and included as a docker volume following the above syntax.
 
 Various configuration defaults exist (defined in `tac_user.cfg`)
-**TACACS Key:** `ciscotacacskey`
-**Priv 15 User:** `tacacs_admin` **password:** `cisco`
-**Priv 0 User:** `tacacs_user` **password:** `cisco`
+**TACACS Key:** `ciscotacacskey`  
+**Priv 15 User:** `tacacs_admin` **password:** `cisco`  
+**Priv 0 User:** `tacacs_user` **password:** `cisco`  
 
 ## Usage
 By default all logs (including detailed information on authorization and authentication) are sent to stdout, meaning they're available to view via `docker logs` once the container is operational. This log contains all AAA information.
