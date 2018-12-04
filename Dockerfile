@@ -3,28 +3,34 @@ MAINTAINER David Chidell (dchidell@cisco.com)
 ENV VERSION=201712190728
 ENV TAC_PLUS_BIN=/tacacs/sbin/tac_plus
 ENV CONF_FILE=/etc/tac_plus/tac_plus.cfg
-
+ENV WEBPROC_VERSION 0.1.9
+ENV WEBPROC_URL https://github.com/jpillora/webproc/releases/download/$WEBPROC_VERSION/webproc_linux_amd64.gz
 
 FROM base as build
 RUN apk add --no-cache \
-    build-base bzip2 perl perl-digest-md5 perl-ldap
+    build-base bzip2 perl perl-digest-md5 perl-ldap curl
 ADD http://www.pro-bono-publico.de/projects/src/DEVEL.$VERSION.tar.bz2 /tac_plus.tar.bz2
-ADD http://www.pro-bono-publico.de/projects/unpacked/mavis/perl/mavis_tacplus_radius.pl /mavis_tacplus_radius.pl
 RUN tar -xjf /tac_plus.tar.bz2 && \
     cd /PROJECTS && \
     ./configure --prefix=/tacacs && \
     make && \
     make install
 
+RUN curl -sL $WEBPROC_URL | gzip -d - > /usr/local/bin/webproc && \
+    chmod u+x /usr/local/bin/webproc
+
 
 FROM base
 COPY --from=build /tacacs /tacacs
-COPY --from=build /mavis_tacplus_radius.pl /usr/local/lib/mavis_tacplus_radius.pl
+COPY --from=build /usr/local/bin/webproc /usr/local/bin/webproc
 COPY tac_base.cfg $CONF_FILE
 COPY tac_user.cfg /etc/tac_plus/tac_user.cfg
-COPY entrypoint.sh /entrypoint.sh 
+RUN touch /var/log/tac_plus.log
 
-RUN apk add --no-cache perl-digest-md5 perl-ldap && \
-    chmod u+x /entrypoint.sh
+
+
 EXPOSE 49
-ENTRYPOINT ["/entrypoint.sh"]
+EXPOSE 8080
+
+ENTRYPOINT ["webproc","--on-exit","restart","--config","/etc/tac_plus/tac_user.cfg,/etc/tac_plus/tac_plus.cfg,/var/log/tac_plus.log","--","/tacacs/sbin/tac_plus","-f","/etc/tac_plus/tac_plus.cfg"]
+
