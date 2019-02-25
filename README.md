@@ -15,9 +15,13 @@ If base configuration changes are required, the `tac_base.cfg` file can be alter
 
 Various configuration defaults exist (defined in `tac_user.cfg`)  
 **TACACS Key:** `ciscotacacskey`  
-**Priv 15 User:** `tacacs_admin` **password:** `cisco`  
-**Priv 0 User:** `tacacs_user` **password:** `cisco`  
-**Show User:** `tacacs_showuser` **password:** `cisco`  
+**Priv 15 User (IOS):** `iosadmin` **password:** `cisco`  
+**Priv 0 User (IOS):** `iosuser` **password:** `cisco`
+**Network Admin (NXOS):** `nxosadmin` **password:** `cisco`  
+**Network User (NXOS):** `nxosuser` **password:** `cisco`  
+**Read-write User (ACI):** `aciadmin` **password:** `cisco`  
+**Read-only User (ACI):** `aciro` **password:** `cisco`  
+**Show User:** `showuser` **password:** `cisco`  
 
 The following cisco IOS configuration was used in the development of this image:
 ```
