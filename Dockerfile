@@ -24,7 +24,7 @@ COPY tac_base.cfg $CONF_FILE
 COPY tac_user.cfg /etc/tac_plus/tac_user.cfg
 COPY entrypoint.sh /entrypoint.sh 
 
-RUN apk add --no-cache perl-digest-md5 perl-ldap && \
+RUN apk add --no-cache perl perl-digest-md5 perl-ldap && \
     chmod u+x /entrypoint.sh
 EXPOSE 49
 ENTRYPOINT ["/entrypoint.sh"]
